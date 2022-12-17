@@ -4,6 +4,7 @@ export type ProductCartType = {
   name: string;
   price: number;
   quantity: number;
+  sale?: number;
 };
 
 /*******************************SCHEMA*****************************/
@@ -13,4 +14,5 @@ export const ProductCart = {
   name: { type: String, required: true },
   price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  sale: Number,
 };

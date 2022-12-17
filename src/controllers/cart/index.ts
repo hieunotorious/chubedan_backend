@@ -18,6 +18,7 @@ const addToCart = async (req: Request, res: Response, next: NextFunction) => {
           name: product.name,
           price: product.price,
           quantity,
+          sale: product.sale,
         };
         const user = await User.findOneAndUpdate(
           { _id },
