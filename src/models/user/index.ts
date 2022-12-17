@@ -1,7 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-
-import { ProductCart, ProductCartType } from "../product";
-
+import { ProductCart, ProductCartType } from "../cart";
 /*********************TYPE & INTERFACE*****************************/
 
 export enum Gender {
