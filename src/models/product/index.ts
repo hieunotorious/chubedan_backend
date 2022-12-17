@@ -35,10 +35,6 @@ export enum AllType {
   pre_order = "PRE_ORDER",
 }
 
-export type ProductCartType = {
-  quantity: number;
-} & ProductType;
-
 /* Model and Schema */
 
 export const ProductModel = {
@@ -70,11 +66,6 @@ export const ProductModel = {
 
   available: { type: Boolean, default: true },
   all: { type: String, enum: ["NEW", "SALE", "PRE_ORDER"], default: "NEW" },
-};
-
-export const ProductCart = {
-  ...ProductModel,
-  quantity: { type: Number, required: true },
 };
 
 export type ProductTypeModel = {} & ProductType & Document;

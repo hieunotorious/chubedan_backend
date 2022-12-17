@@ -5,7 +5,7 @@ import Logging from "./library/Logging";
 import userRouter from "./routes/user";
 import { config } from "dotenv";
 import cors from "cors";
-
+import productRouter from "./routes/product";
 const app = express();
 config();
 
@@ -76,7 +76,7 @@ const StartServer = () => {
 
   /** Routes */
   app.use("/user", userRouter);
-
+  app.use("/product", productRouter);
   /** Healthcheck */
   app.get("/ping", (req, res, next) =>
     res.status(200).json({ messsage: "pong" })

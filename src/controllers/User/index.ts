@@ -49,6 +49,18 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const logout = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { refreshToken } = req.body;
+    if (refreshToken) {
+      refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+    }
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ message: err });
+  }
+};
+
 const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, username, password } = req.body;
@@ -151,6 +163,7 @@ const refreshToken = async (
 };
 
 export default {
+  logout,
   login,
   signup,
   getSelfUser,
