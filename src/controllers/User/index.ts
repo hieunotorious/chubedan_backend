@@ -113,14 +113,15 @@ const updateSelfUser = async (
 ) => {
   try {
     const _id = getIdFromReq(req);
-    const { displayName, username, birthday, info } = req.body;
+    const { displayName, username, dob, phoneNumber, gender, address } =
+      req.body;
     const findUser = await User.find({ username });
     if (findUser.length > 0 && findUser[0]._id.toString() !== _id) {
       return res.status(500).json({ message: "Username already existed" });
     } else {
       const updatedUser = await User.findOneAndUpdate(
         { _id },
-        { $set: { displayName, username, birthday, info } },
+        { $set: { displayName, username, dob, phoneNumber, address, gender } },
         { new: true }
       );
       return res.status(200).json(updatedUser);
