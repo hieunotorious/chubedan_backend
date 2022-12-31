@@ -32,7 +32,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
       });
       const savedUser = await user.save();
       if (savedUser) {
-        const expiredDate = floor(moment().add(7, "days").valueOf() / 1000);
+        const expiredDate = moment().add(7, "days").format();
         const token = tokenGen(
           { _id: _id.toString(), role: savedUser.role },
           7
@@ -71,7 +71,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       const user = findUser[0];
       const compare = await bcrypt.compare(password, user.password);
       if (compare) {
-        const expiredDate = floor(moment().add(7, "days").valueOf() / 1000);
+        const expiredDate = moment().add(7, "days").format();
         const token = tokenGen(
           { _id: user._id.toString(), role: user.role },
           7
