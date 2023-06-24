@@ -85,7 +85,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         return res.status(500).json({ message: "Incorrect Password" });
       }
     } else {
-      return res.status(500).json({ message: "Invalid Email or Username" });
+      return res.status(500).json({ message: "error.auth.invalid" });
     }
   } catch (err) {
     return res.status(500).json({ message: err });
