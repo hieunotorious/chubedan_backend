@@ -1,25 +1,16 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import controller from "../../controllers/user";
-import { validateToken } from "../../middleware/validate";
-import cartController from "../../controllers/cart";
+import { userController, cartController } from '../../controllers';
+import { validateToken } from '../../middleware/validate';
 const router = Router();
 
-router.post("/signup", controller.signup);
-router.post("/login", controller.login);
-router.get("/getself", validateToken, controller.getSelfUser);
-router.post("/refresh_token", controller.refreshToken);
-router.patch("/update_self", validateToken, controller.updateSelfUser);
-router.post("/logout", validateToken, controller.logout);
+router.patch('/update_self', validateToken, userController.updateSelfUser);
+router.get('/getself', validateToken, userController.getSelfUser);
 
-//Cart routes2
-router.post("/cart/add", validateToken, cartController.addToCart);
-router.post("/cart/remove", validateToken, cartController.removeFromCart);
-router.post(
-  "/cart/updatequantity",
-  validateToken,
-  cartController.updateProductCartQuantity
-);
-router.post("/cart/clear", validateToken, cartController.clearCart);
+//Cart routes
+router.post('/cart/add', validateToken, cartController.addToCart);
+router.post('/cart/remove', validateToken, cartController.removeFromCart);
+router.post('/cart/updatequantity', validateToken, cartController.updateProductCartQuantity);
+router.post('/cart/clear', validateToken, cartController.clearCart);
 
 export default router;

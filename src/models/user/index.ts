@@ -1,15 +1,16 @@
-import { Schema, model, Document } from "mongoose";
-import { ProductCart, ProductCartType } from "../cart";
+import { Schema, model, Document } from 'mongoose';
+import { ProductCart, ProductCartType } from './cart';
 /*********************TYPE & INTERFACE*****************************/
 
 export enum Gender {
-  Male = "MALE",
-  Female = "FEMALE",
-  other = "OTHER",
+  Male = 'MALE',
+  Female = 'FEMALE',
+  other = 'OTHER'
 }
 export enum Role {
-  user = "USER",
-  admin = "ADMIN",
+  user = 'USER',
+  admin = 'ADMIN',
+  owner = 'OWNER'
 }
 
 export type UserType = {
@@ -18,7 +19,8 @@ export type UserType = {
   email: string;
   displayName: string;
   address: string;
-  phonenumber: string;
+  phoneNumber: string;
+  avatar?: string;
   dob: string;
   gender: Gender;
   role: Role;
@@ -36,17 +38,18 @@ const userSchema = new Schema(
     email: { type: String, required: true },
     displayName: { type: String, required: true },
     address: { type: String, required: true },
-    phonenumber: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    avatar: String,
     dob: { type: String, required: true },
     gender: {
       type: String,
-      enum: ["MALE", "FEMALE", "OTHER"],
-      default: "OTHER",
+      enum: ['MALE', 'FEMALE', 'OTHER'],
+      default: 'OTHER'
     },
-    role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
-    cart: [ProductCart],
+    role: { type: String, enum: ['USER', 'ADMIN', 'OWNER'], default: 'USER' },
+    cart: [ProductCart]
   },
   { timestamps: true }
 );
 
-export default model<UserTypeModel>("User", userSchema);
+export default model<UserTypeModel>('User', userSchema);

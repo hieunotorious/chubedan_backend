@@ -1,13 +1,13 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import controller from "../../controllers/product";
-import { validateToken } from "../../middleware/validate";
+import { productController } from '../../controllers';
+import { validateToken } from '../../middleware/validate';
 const router = Router();
 
-router.get("/all", controller.getAllProducts);
-router.get("/get/:id", controller.getProduct);
-router.post("/create", validateToken, controller.createProduct);
-router.patch("/update/:id", validateToken, controller.updateProduct);
-router.delete("/delete/:id", validateToken, controller.deleteProduct);
+router.get('/all', productController.getAllProducts);
+router.get('/get/:id', productController.getProduct);
+router.post('/create', validateToken, productController.createProduct);
+router.patch('/update/:id', validateToken, productController.updateProduct);
+router.delete('/delete/:id', validateToken, productController.deleteProduct);
 
 export default router;

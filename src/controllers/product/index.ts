@@ -1,17 +1,14 @@
-import { NextFunction, Request, Response } from "express";
-import mongoose from "mongoose";
-import Product, { ProductType } from "../../models/product";
+import { NextFunction, Request, Response } from 'express';
+import mongoose from 'mongoose';
+import { ProductType } from '../../models/product';
+import { Product } from '../../models';
 
-const getAllProducts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { offset, limit } = req.query;
     const products = await Product.find()
-      .skip(parseInt(offset?.toString() ?? "0"))
-      .limit(parseInt(limit?.toString() ?? "0"));
+      .skip(parseInt(offset?.toString() ?? '0'))
+      .limit(parseInt(limit?.toString() ?? '0'));
     return res.status(200).json(products);
   } catch (err) {
     return res.status(500).json({ message: err });
@@ -25,32 +22,17 @@ const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     if (product) {
       return res.status(200).json(product);
     } else {
-      return res.status(404).json({ message: "Product not found" });
+      return res.status(404).json({ message: 'Product not found' });
     }
   } catch (err) {
     return res.status(500).json({ message: err });
   }
 };
 
-const createProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {
-      img,
-      name,
-      description,
-      category,
-      brand,
-      price,
-      sale,
-      review,
-      rating,
-      available,
-      all,
-    } = req.body as ProductType;
+    const { img, name, description, category, brand, price, sale, review, rating, available, all } =
+      req.body as ProductType;
     const _id = new mongoose.Types.ObjectId();
     const product = new Product({
       _id,
@@ -64,39 +46,24 @@ const createProduct = async (
       review,
       rating,
       available,
-      all,
+      all
     });
     const savedProduct = await product.save();
     if (savedProduct) {
       return res.status(201).json(savedProduct);
     } else {
-      return res.status(500).json({ message: "Faild to create new product" });
+      return res.status(500).json({ message: 'Faild to create new product' });
     }
   } catch (err) {
     return res.status(500).json({ message: err });
   }
 };
 
-const updateProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id = req.params.id;
-    const {
-      img,
-      name,
-      description,
-      category,
-      brand,
-      price,
-      sale,
-      review,
-      rating,
-      available,
-      all,
-    } = req.body as ProductType;
+    const { img, name, description, category, brand, price, sale, review, rating, available, all } =
+      req.body as ProductType;
     const updatedProduct = await Product.findOneAndUpdate(
       { _id },
       {
@@ -111,8 +78,8 @@ const updateProduct = async (
           review,
           rating,
           available,
-          all,
-        },
+          all
+        }
       },
       { new: true }
     );
@@ -122,11 +89,7 @@ const updateProduct = async (
   }
 };
 
-const deleteProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id = req.params.id;
     const deletedProduct = await Product.deleteOne({ _id });
@@ -142,5 +105,5 @@ export default {
   getProduct,
   createProduct,
   updateProduct,
-  deleteProduct,
+  deleteProduct
 };

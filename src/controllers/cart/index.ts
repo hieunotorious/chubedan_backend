@@ -1,9 +1,7 @@
-import { NextFunction, Request, Response } from "express";
-import { floor } from "lodash";
-import User, { Role, UserType } from "../../models/user";
-import { getIdFromReq } from "../../utils/token";
-import Product, { ProductType } from "../../models/product";
-import { ProductCartType } from "../../models/cart";
+import { NextFunction, Request, Response } from 'express';
+import { ProductCartType } from '../../models/user/cart';
+import { Product, User } from '../../models';
+import { getIdFromReq } from '../../utils/token';
 
 const addToCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,12 +16,12 @@ const addToCart = async (req: Request, res: Response, next: NextFunction) => {
           name: product.name,
           price: product.price,
           quantity,
-          sale: product.sale,
+          sale: product.sale
         };
         const user = await User.findOneAndUpdate(
           { _id },
           {
-            $addToSet: { cart: newProductCart },
+            $addToSet: { cart: newProductCart }
           },
 
           { new: true }
@@ -31,13 +29,13 @@ const addToCart = async (req: Request, res: Response, next: NextFunction) => {
         if (user) {
           return res.status(201).json(user.cart);
         } else {
-          return res.status(500).json({ message: "Failed To Add Product" });
+          return res.status(500).json({ message: 'Failed To Add Product' });
         }
       } else {
-        return res.status(500).json({ message: "Product Does Not Exist" });
+        return res.status(500).json({ message: 'Product Does Not Exist' });
       }
     } else {
-      return res.status(500).json({ message: "Product Does Not Exist" });
+      return res.status(500).json({ message: 'Product Does Not Exist' });
     }
   } catch (err) {
     return res.status(500).json({ message: err });
@@ -51,26 +49,22 @@ const clearCart = async (req: Request, res: Response, next: NextFunction) => {
       { _id },
       {
         $set: {
-          cart: [],
-        },
+          cart: []
+        }
       },
       { new: true }
     );
     if (user) {
       return res.status(200).json({ success: true });
     } else {
-      return res.status(500).json({ message: "Failed To Clear Cart" });
+      return res.status(500).json({ message: 'Failed To Clear Cart' });
     }
   } catch (err) {
     return res.status(500).json({ message: err });
   }
 };
 
-const updateProductCartQuantity = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const updateProductCartQuantity = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id = getIdFromReq(req);
     const { product_id, quantity } = req.body;
@@ -79,21 +73,19 @@ const updateProductCartQuantity = async (
         { _id, cart: { $elemMatch: { product_id } } },
         {
           $inc: {
-            "cart.$.quantity": quantity,
-          },
+            'cart.$.quantity': quantity
+          }
         },
         { new: true }
       );
       if (user) {
         return res.status(200).json(user.cart);
       } else {
-        return res
-          .status(500)
-          .json({ message: "Failed To Update Product Cart" });
+        return res.status(500).json({ message: 'Failed To Update Product Cart' });
       }
     } else {
       return res.status(500).json({
-        message: "Product Does Not Existed In Your Cart",
+        message: 'Product Does Not Existed In Your Cart'
       });
     }
   } catch (err) {
@@ -101,11 +93,7 @@ const updateProductCartQuantity = async (
   }
 };
 
-const removeFromCart = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const removeFromCart = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const _id = getIdFromReq(req);
     const { product_id } = req.body;
@@ -114,19 +102,19 @@ const removeFromCart = async (
         { _id, cart: { $elemMatch: { product_id } } },
         {
           $pull: {
-            cart: { product_id },
-          },
+            cart: { product_id }
+          }
         },
         { new: true }
       );
       if (user) {
         return res.status(200).json(user.cart);
       } else {
-        return res.status(500).json({ message: "Failed To Remove Product" });
+        return res.status(500).json({ message: 'Failed To Remove Product' });
       }
     } else {
       return res.status(500).json({
-        message: "Product Does Not Existed In Your Cart",
+        message: 'Product Does Not Existed In Your Cart'
       });
     }
   } catch (err) {
@@ -138,5 +126,5 @@ export default {
   addToCart,
   updateProductCartQuantity,
   clearCart,
-  removeFromCart,
+  removeFromCart
 };
