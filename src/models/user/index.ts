@@ -29,17 +29,24 @@ export type UserTypeModel = {} & UserType & Document;
 
 /*******************************SCHEMA*****************************/
 
-const userSchema = new Schema({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
-  email: { type: String, required: true },
-  displayName: { type: String, required: true },
-  address: { type: String, required: true },
-  phonenumber: { type: String, required: true },
-  dob: { type: String, required: true },
-  gender: { type: String, enum: ["MALE", "FEMALE", "OTHER"], default: "OTHER" },
-  role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
-  cart: [ProductCart],
-});
+const userSchema = new Schema(
+  {
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true },
+    displayName: { type: String, required: true },
+    address: { type: String, required: true },
+    phonenumber: { type: String, required: true },
+    dob: { type: String, required: true },
+    gender: {
+      type: String,
+      enum: ["MALE", "FEMALE", "OTHER"],
+      default: "OTHER",
+    },
+    role: { type: String, enum: ["USER", "ADMIN"], default: "USER" },
+    cart: [ProductCart],
+  },
+  { timestamps: true }
+);
 
 export default model<UserTypeModel>("User", userSchema);

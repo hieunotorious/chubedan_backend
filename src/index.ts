@@ -6,6 +6,8 @@ import userRouter from "./routes/user";
 import { config } from "dotenv";
 import cors from "cors";
 import productRouter from "./routes/product";
+import helmet from "helmet";
+
 const app = express();
 config();
 
@@ -24,7 +26,7 @@ const StartServer = () => {
   app.use((req, res, next) => {
     /** Log the req */
     Logging.info(
-      `Incomming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
+      `Incoming - METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`
     );
 
     res.on("finish", () => {
@@ -39,6 +41,7 @@ const StartServer = () => {
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(helmet());
   app.use(
     cors({
       origin: [process.env.FRONT_END_URL || "", "http://localhost:3000"],

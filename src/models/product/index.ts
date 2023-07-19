@@ -70,8 +70,11 @@ export const ProductModel = {
 
 export type ProductTypeModel = {} & ProductType & Document;
 
-const procductSchema = new Schema({
-  ...ProductModel,
-});
+const productSchema = new Schema(
+  {
+    ...ProductModel,
+  },
+  { timestamps: true }
+);
 
-export default model<ProductTypeModel>("Product", procductSchema);
+export default model<ProductTypeModel>("Product", productSchema);
