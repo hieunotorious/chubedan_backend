@@ -1,10 +1,10 @@
-import express from 'express';
 import http from 'http';
+import cors from 'cors';
+import { config } from 'dotenv';
+import express from 'express';
+import helmet from 'helmet';
 import mongoose from 'mongoose';
 import Logging from './library/Logging';
-import { config } from 'dotenv';
-import cors from 'cors';
-import helmet from 'helmet';
 import { authRouter, productRouter, userRouter } from './routes';
 
 const app = express();
@@ -78,10 +78,10 @@ const StartServer = () => {
   app.use('/user', userRouter);
   app.use('/product', productRouter);
   /** Healthcheck */
-  app.get('/ping', (req, res, next) => res.status(200).json({ messsage: 'pong' }));
+  app.get('/ping', (req, res) => res.status(200).json({ messsage: 'pong' }));
 
   /** Error handling */
-  app.use((req, res, next) => {
+  app.use((req, res) => {
     const error = new Error('Not found');
 
     Logging.error(error);

@@ -1,28 +1,28 @@
 import bcrypt from 'bcrypt';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import { floor } from 'lodash';
 import moment from 'moment';
 import mongoose from 'mongoose';
-import { Role, UserType } from '../../models/user';
-import { User } from '../../models';
+import { User } from 'src/models';
+import {
+  ChangePasswordRequest,
+  ForgotPasswordRequest,
+  ResetPasswordRequest
+} from 'src/models/auth';
+import { Role, UserType } from 'src/models/user';
+import { sendResetPasswordEmail } from 'src/utils/email';
 import {
   generateCode,
   getIdFromReq,
   parseJwt,
   resetPasswordTokenGen,
   tokenGen
-} from '../../utils/token';
-import {
-  ChangePasswordRequest,
-  ForgotPasswordRequest,
-  ResetPasswordRequest
-} from '../../models/auth';
-import { sendResetPasswordEmail } from '../../utils/email';
-import jwt from 'jsonwebtoken';
+} from 'src/utils/token';
 
 let refreshTokens: string[] = [];
 
-const signup = async (req: Request, res: Response, next: NextFunction) => {
+const signup = async (req: Request, res: Response) => {
   try {
     const { email, username, password, displayName, dob }: UserType = req.body;
     const findUser = await User.find({ email });
@@ -56,7 +56,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const logout = (req: Request, res: Response, next: NextFunction) => {
+const logout = (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
     if (refreshToken) {
@@ -68,7 +68,7 @@ const logout = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const login = async (req: Request, res: Response, next: NextFunction) => {
+const login = async (req: Request, res: Response) => {
   try {
     const { email, username, password } = req.body;
     const findUser = username ? await User.find({ username }) : await User.find({ email });
@@ -92,7 +92,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const refreshToken = async (req: Request, res: Response, next: NextFunction) => {
+const refreshToken = async (req: Request, res: Response) => {
   try {
     const { refreshToken } = req.body;
     if (refreshToken && refreshTokens.findIndex((token) => token === refreshToken) > -1) {
@@ -114,7 +114,7 @@ const refreshToken = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
-const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+const changePassword = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const { password, newPassword }: ChangePasswordRequest = req.body;
@@ -149,7 +149,7 @@ const changePassword = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-const forgotPassword = async (req: Request, res: Response, next: NextFunction) => {
+const forgotPassword = async (req: Request, res: Response) => {
   try {
     const { email }: ForgotPasswordRequest = req.body;
     const user = await User.find({ email });
@@ -163,7 +163,7 @@ const forgotPassword = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+const resetPassword = async (req: Request, res: Response) => {
   try {
     const { token, password }: ResetPasswordRequest = req.body;
 

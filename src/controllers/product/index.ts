@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { ProductType } from '../../models/product';
-import { Product } from '../../models';
+import { Product } from 'src/models';
+import { ProductType } from 'src/models/product';
 
-const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+const getAllProducts = async (req: Request, res: Response) => {
   try {
     const { offset, limit } = req.query;
     const products = await Product.find()
@@ -15,7 +15,7 @@ const getAllProducts = async (req: Request, res: Response, next: NextFunction) =
   }
 };
 
-const getProduct = async (req: Request, res: Response, next: NextFunction) => {
+const getProduct = async (req: Request, res: Response) => {
   try {
     const _id = req.params.id;
     const product = await Product.findById(_id);
@@ -29,7 +29,7 @@ const getProduct = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+const createProduct = async (req: Request, res: Response) => {
   try {
     const { img, name, description, category, brand, price, sale, review, rating, available, all } =
       req.body as ProductType;
@@ -59,7 +59,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
+const updateProduct = async (req: Request, res: Response) => {
   try {
     const _id = req.params.id;
     const { img, name, description, category, brand, price, sale, review, rating, available, all } =
@@ -89,10 +89,10 @@ const updateProduct = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+const deleteProduct = async (req: Request, res: Response) => {
   try {
     const _id = req.params.id;
-    const deletedProduct = await Product.deleteOne({ _id });
+    await Product.deleteOne({ _id });
 
     return res.status(200).json({ success: true });
   } catch (err) {

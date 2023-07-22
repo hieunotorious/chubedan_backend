@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
-import { User } from '../../models';
-import { getIdFromReq } from '../../utils/token';
+import { Request, Response } from 'express';
+import { User } from 'src/models';
+import { getIdFromReq } from 'src/utils/token';
 
-const getSelfUser = async (req: Request, res: Response, next: NextFunction) => {
+const getSelfUser = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const user = await User.findById(_id);
@@ -16,7 +16,7 @@ const getSelfUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateSelfUser = async (req: Request, res: Response, next: NextFunction) => {
+const updateSelfUser = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const { displayName, username, dob, phoneNumber, gender, address } = req.body;

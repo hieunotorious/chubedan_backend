@@ -27,7 +27,7 @@ export type UserType = {
   cart: ProductCartType[];
 };
 
-export type UserTypeModel = {} & UserType & Document;
+export type UserTypeModel = UserType & Document;
 
 /*******************************SCHEMA*****************************/
 

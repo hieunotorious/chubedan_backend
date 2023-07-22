@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
-import { ProductCartType } from '../../models/user/cart';
-import { Product, User } from '../../models';
-import { getIdFromReq } from '../../utils/token';
+import { Request, Response } from 'express';
+import { Product, User } from 'src/models';
+import { ProductCartType } from 'src/models/user/cart';
+import { getIdFromReq } from 'src/utils/token';
 
-const addToCart = async (req: Request, res: Response, next: NextFunction) => {
+const addToCart = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const { product_id, quantity } = req.body;
@@ -42,7 +42,7 @@ const addToCart = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const clearCart = async (req: Request, res: Response, next: NextFunction) => {
+const clearCart = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const user = await User.findOneAndUpdate(
@@ -64,7 +64,7 @@ const clearCart = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const updateProductCartQuantity = async (req: Request, res: Response, next: NextFunction) => {
+const updateProductCartQuantity = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const { product_id, quantity } = req.body;
@@ -93,7 +93,7 @@ const updateProductCartQuantity = async (req: Request, res: Response, next: Next
   }
 };
 
-const removeFromCart = async (req: Request, res: Response, next: NextFunction) => {
+const removeFromCart = async (req: Request, res: Response) => {
   try {
     const _id = getIdFromReq(req);
     const { product_id } = req.body;

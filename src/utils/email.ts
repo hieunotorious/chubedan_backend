@@ -1,4 +1,4 @@
-import { sendEmail } from '../library/Mailler';
+import { sendEmail } from 'src/library/Mailler';
 
 const ResetPasswordText = (token: string) => `Hello,
 

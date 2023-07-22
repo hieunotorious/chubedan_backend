@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { userController, cartController } from '../../controllers';
-import { validateToken } from '../../middleware/validate';
+import { userController, cartController } from 'src/controllers';
+import { validateToken } from 'src/middleware/validate';
 const router = Router();
 
 router.patch('/update_self', validateToken, userController.updateSelfUser);

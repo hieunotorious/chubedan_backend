@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 export type ProductType = {
   img: string;
@@ -15,24 +15,24 @@ export type ProductType = {
 };
 
 export enum BrandType {
-  marvel_legend = "MARVEL_LEGEND",
-  mcfarlane = "MCFARLANE",
-  shf = "SHF",
-  mafex = "MAFEX",
-  dc_collectibles = "DC_COLLECTIBLES",
-  wwe = "WWE",
-  figuart = "FIGUART",
+  marvel_legend = 'MARVEL_LEGEND',
+  mcfarlane = 'MCFARLANE',
+  shf = 'SHF',
+  mafex = 'MAFEX',
+  dc_collectibles = 'DC_COLLECTIBLES',
+  wwe = 'WWE',
+  figuart = 'FIGUART'
 }
 
 export enum CategoryType {
-  action_figure = "ACTION_FIGURE",
-  statue = "STATUE",
+  action_figure = 'ACTION_FIGURE',
+  statue = 'STATUE'
 }
 
 export enum AllType {
-  new = "NEW",
-  sale = "SALE",
-  pre_order = "PRE_ORDER",
+  new = 'NEW',
+  sale = 'SALE',
+  pre_order = 'PRE_ORDER'
 }
 
 /* Model and Schema */
@@ -43,16 +43,8 @@ export const ProductModel = {
   description: String,
   brand: {
     type: String,
-    enum: [
-      "MARVEL_LEGEND",
-      "MCFARLANE",
-      "SHF",
-      "MAFEX",
-      "DC_COLLECTIBLES",
-      "WWE",
-      "FIGUART",
-    ],
-    default: "SHF",
+    enum: ['MARVEL_LEGEND', 'MCFARLANE', 'SHF', 'MAFEX', 'DC_COLLECTIBLES', 'WWE', 'FIGUART'],
+    default: 'SHF'
   },
   review: { type: Number, required: true },
   price: { type: Number, required: true },
@@ -60,21 +52,21 @@ export const ProductModel = {
   sale: Number,
   category: {
     type: String,
-    enum: ["STATUE", "ACTION_FIGURE"],
-    default: "STATUE",
+    enum: ['STATUE', 'ACTION_FIGURE'],
+    default: 'STATUE'
   },
 
   available: { type: Boolean, default: true },
-  all: { type: String, enum: ["NEW", "SALE", "PRE_ORDER"], default: "NEW" },
+  all: { type: String, enum: ['NEW', 'SALE', 'PRE_ORDER'], default: 'NEW' }
 };
 
 export type ProductTypeModel = {} & ProductType & Document;
 
 const productSchema = new Schema(
   {
-    ...ProductModel,
+    ...ProductModel
   },
   { timestamps: true }
 );
 
-export default model<ProductTypeModel>("Product", productSchema);
+export default model<ProductTypeModel>('Product', productSchema);

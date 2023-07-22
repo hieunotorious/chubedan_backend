@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { productController } from '../../controllers';
-import { validateToken } from '../../middleware/validate';
+import { productController } from 'src/controllers';
+import { validateToken } from 'src/middleware/validate';
 const router = Router();
 
 router.get('/all', productController.getAllProducts);
