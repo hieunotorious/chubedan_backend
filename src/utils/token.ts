@@ -17,3 +17,18 @@ export const getIdFromReq = (req: Request) => {
 
   return _id;
 };
+
+export const generateCode = () => {
+  const min = 100000;
+  const max = 999999;
+  const code = Math.floor(Math.random() * (max - min + 1)) + min;
+  return code.toString();
+};
+
+export const resetPasswordTokenGen = (email: string, code: string) => {
+  const payload = { email, code };
+  const token = jwt.sign(payload, process.env.JWT_KEY || '', {
+    expiresIn: 60 * 15 // 15 minutes
+  });
+  return token;
+};

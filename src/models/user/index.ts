@@ -18,8 +18,8 @@ export type UserType = {
   password: string;
   email: string;
   displayName: string;
-  address: string;
-  phoneNumber: string;
+  address?: string;
+  phoneNumber?: string;
   avatar?: string;
   dob: string;
   gender: Gender;
@@ -37,8 +37,8 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     email: { type: String, required: true },
     displayName: { type: String, required: true },
-    address: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    address: String,
+    phoneNumber: String,
     avatar: String,
     dob: { type: String, required: true },
     gender: {
