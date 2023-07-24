@@ -8,17 +8,19 @@
     "experimentalDecorators": true,
     "strictNullChecks": true,
     "baseUrl": ".",
-    "lib": ["dom", "es2017", "es2018"],
+    "lib": ["ES2022"],
     "module": "commonjs",
     "moduleResolution": "node",
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "es6",
+    "target": "ES2022",
     "allowJs": true,
     "typeRoots": ["./node_modules/@types"],
-    "rootDir": "./src",
     "esModuleInterop": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
