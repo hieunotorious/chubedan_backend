@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 export type ProductType = {
   img: string;
@@ -60,7 +60,7 @@ export const ProductModel = {
   all: { type: String, enum: ['NEW', 'SALE', 'PRE_ORDER'], default: 'NEW' }
 };
 
-export type ProductTypeModel = {} & ProductType & Document;
+export type ProductTypeModel = ProductType & Document;
 
 const productSchema = new Schema(
   {
