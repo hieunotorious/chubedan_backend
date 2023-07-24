@@ -3,16 +3,8 @@
   "builds": [
     {
       "src": "dist/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "yarn build"
-      }
+      "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/dist/index.js"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "dist/index.js" }]
 }
