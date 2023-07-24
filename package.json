@@ -58,6 +58,7 @@
     "lint-staged": "^13.2.3",
     "nodemon": "^2.0.20",
     "prettier": "^3.0.0",
+    "ts-loader": "^9.4.4",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "tslib": "^2.6.0",
