@@ -1,17 +1,8 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "src/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "buildCommand": "yarn build"
-      }
-    },
-    {
-      "src": "dist/index.js",
-      "use": "@vercel/node"
+  "functions": {
+    "api/index.ts": {
+      "runtime": "@vercel/node@2.7.0"
     }
-  ],
-  "rewrites": [{ "source": "/(.*)", "destination": "dist/index.js" }]
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
 }
