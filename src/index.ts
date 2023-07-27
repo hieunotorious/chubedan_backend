@@ -97,3 +97,5 @@ const StartServer = () => {
       Logging.info(`Server is running on port ${process.env.BE_PORT}`)
     );
 };
+
+export default app;
