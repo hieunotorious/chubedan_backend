@@ -25,10 +25,10 @@ export const generateCode = () => {
   return code.toString();
 };
 
-export const resetPasswordTokenGen = (email: string, code: string) => {
-  const payload = { email, code };
+export const resetPasswordTokenGen = (code: string, minutes?: number) => {
+  const payload = { code };
   const token = jwt.sign(payload, process.env.JWT_KEY || '', {
-    expiresIn: 60 * 15 // 15 minutes
+    expiresIn: 60 * (minutes || 15) // 15 minutes
   });
   return token;
 };
