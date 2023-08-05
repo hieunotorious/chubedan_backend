@@ -25,9 +25,9 @@ const AuthToken = {
 
 export const TokenSchema = new Schema(
   {
-    accessToken: AuthToken,
-    refreshToken: AuthToken,
-    resetPasswordToken: AuthToken,
+    accessToken: { type: AuthToken, required: false },
+    refreshToken: { type: AuthToken, required: false },
+    resetPasswordToken: { type: AuthToken, required: false },
     user_id: { type: String, required: true }
   },
   { timestamps: true }

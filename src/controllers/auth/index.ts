@@ -74,8 +74,8 @@ const logout = async (req: Request, res: Response) => {
       { user_id },
       {
         $set: {
-          refreshToken: undefined,
-          accessToken: undefined
+          refreshToken: null,
+          accessToken: null
         }
       }
     );
@@ -99,7 +99,7 @@ const login = async (req: Request, res: Response) => {
         const accessToken = tokenGen({ _id: user_id, role: user.role }, 7);
         const refreshToken = tokenGen({ _id: user_id }, 365);
         await Token.findOneAndUpdate(
-          { _id: user._id },
+          { user_id: user._id },
           {
             $set: {
               accessToken: {
